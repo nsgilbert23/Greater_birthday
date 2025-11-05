@@ -1,0 +1,396 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Happy Birthday Surprise</title>
+<style>
+  :root {
+    --bg1: #2b1055;   /* deep midnight blue */
+    --bg2: #7597de;   /* elegant lavender-blue */
+    --accent: #ffb347; /* soft gold for highlights */
+    --text: #fff8e7;   /* creamy white text */
+    --green: #90ee90;  /* gentle pastel green */
+    --nav-bg: rgba(40,20,70,0.85); /* contrasting navbar */
+    --nav-hover: #ffb347;
+  }
+
+  html, body {
+    height: 100%;
+    margin: 0;
+    font-family: system-ui, -apple-system, Segoe UI, Roboto, 'Helvetica Neue', Arial;
+    background: linear-gradient(145deg, var(--bg1) 10%, var(--bg2) 90%);
+    color: var(--text);
+    scroll-behavior: smooth;
+    overflow-x: hidden;
+    scroll-snap-type: y mandatory;
+  }
+
+  section {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    padding: 80px 20px 40px;
+    scroll-snap-align: start;
+  }
+
+  /* Navbar */
+  nav {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    background: var(--nav-bg);
+    display: flex;
+    justify-content: center;
+    gap: 24px;
+    padding: 12px 0;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+    z-index: 20;
+  }
+
+  nav a {
+    color: #ffe6eb;
+    text-decoration: none;
+    font-weight: 600;
+    letter-spacing: 0.6px;
+    font-size: 1rem;
+    padding: 6px 12px;
+    border-radius: 10px;
+    transition: all 0.3s ease;
+  }
+
+  nav a:hover, nav a.active {
+    background: rgba(255, 182, 193, 0.25);
+    color: #fff;
+    box-shadow: 0 0 12px var(--nav-hover);
+    transform: scale(1.05);
+  }
+
+  /* Card styling */
+  .card {
+    width: 92%;
+    max-width: 520px;
+    padding: 30px;
+    border-radius: 20px;
+    background: rgba(255,255,255,0.07);
+    box-shadow: 0 8px 30px rgba(0,0,0,0.5);
+    text-align: center;
+    position: relative;
+    z-index: 2;
+    backdrop-filter: blur(10px);
+  }
+
+  h1 { 
+    margin:0 0 10px; 
+    font-size:2rem; 
+    letter-spacing:0.6px;
+    color: var(--accent);
+    text-shadow: 0 3px 20px rgba(255, 179, 71, 0.4);
+  }
+
+  .count { 
+    font-size:1.5rem; 
+    margin-bottom:14px; 
+    font-weight:bold; 
+    color: var(--accent); 
+    text-shadow: 0 2px 10px rgba(0,0,0,0.6);
+  }
+
+  .staticMessage { 
+    font-size:1rem; 
+    margin-bottom:10px; 
+    color: rgba(255,255,255,0.85); 
+  }
+
+  .surprise { 
+    margin-top:20px; 
+    font-size:2.4rem; 
+    font-weight:700; 
+    letter-spacing:2px; 
+    opacity:0; 
+    transform:scale(0.6); 
+    transition:all 0.7s cubic-bezier(.2,.9,.3,1); 
+  }
+
+  .surprise.visible { 
+    opacity:1; 
+    transform:scale(1); 
+    color:var(--accent); 
+    text-shadow:0 6px 30px rgba(255,179,71,0.5); 
+  }
+
+  .message { 
+    font-size:1.2rem; 
+    margin-top:20px; 
+    color: var(--green); 
+    text-align:center; 
+    opacity:0; 
+    transition: all 1s; 
+    position:relative; 
+  }
+
+  .message.visible { 
+    opacity:1; 
+    animation:sparkle 1.5s ease-in-out infinite alternate; 
+  }
+
+  @keyframes sparkle { 
+    0%{text-shadow:0 0 3px var(--green),0 0 8px var(--green);} 
+    50%{text-shadow:0 0 8px var(--green),0 0 15px var(--green);} 
+    100%{text-shadow:0 0 3px var(--green),0 0 8px var(--green);} 
+  }
+
+  .animatedWords {
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:center;
+    gap:12px;
+    margin-top:18px;
+  }
+
+  .animatedWords span {
+    font-size:1.3rem;
+    font-weight:700;
+    color:#ffe082;
+    text-shadow:0 0 10px #fff, 0 0 20px #ffb347;
+    animation:floatUp 3s ease-in-out infinite alternate;
+  }
+
+  .animatedWords span:nth-child(2) { color:#9effff; animation-duration:3.5s; }
+  .animatedWords span:nth-child(3) { color:#ffff99; animation-duration:4s; }
+  .animatedWords span:nth-child(4) { color:#b2ff9e; animation-duration:3.2s; }
+  .animatedWords span:nth-child(5) { color:#ffa366; animation-duration:3.8s; }
+  .animatedWords span:nth-child(6) { color:#d4a5ff; animation-duration:3.6s; }
+
+  @keyframes floatUp { 
+    0%{transform:translateY(0);} 
+    50%{transform:translateY(-10px);} 
+    100%{transform:translateY(0);} 
+  }
+
+  .btn {
+    display:inline-block;
+    padding:10px 16px;
+    border-radius:10px;
+    background:transparent;
+    border:1px solid rgba(255,255,255,0.4);
+    cursor:pointer;
+    color:var(--text);
+    backdrop-filter:blur(4px);
+    margin:4px;
+    transition:0.3s;
+  }
+
+  .btn:hover { 
+    background: rgba(255,255,255,0.1);
+    box-shadow: 0 0 10px var(--accent);
+  }
+
+  footer { 
+    margin-top:16px; 
+    font-size:0.85rem; 
+    color:rgba(255,240,243,0.8); 
+    text-align:center; 
+  }
+
+  canvas { 
+    position:fixed; 
+    top:0; 
+    left:0; 
+    width:100%; 
+    height:100%; 
+    pointer-events:none; 
+    z-index:1; 
+  }
+
+  /* FROM page background */
+  #from { background: url('image/nsg.jpg') center/cover no-repeat; }
+  #to { background: url('image/greater.jpg') center/cover no-repeat; }
+
+  /* About page night-friendly */
+  #about { background: linear-gradient(180deg, #100d2c 0%, #2b1055 100%); }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="#home" class="active">Home</a>
+  <a href="#offers">Offers</a>
+  <a href="#to">To</a>
+  <a href="#from">From</a>
+  <a href="#about">About</a>
+</nav>
+
+<section id="home">
+  <div class="card">
+    <h1>Birthday Surprise for Greater Kamikazi</h1>
+    <div class="staticMessage">Counting down to a very special moment just for you! 💖</div>
+    <div class="count" id="count">Loading countdown...</div>
+
+    <div>
+      <button class="btn" id="revealBtn">Try to reveal</button>
+      <button class="btn" id="copyBtn">Copy link</button>
+    </div>
+
+    <div class="animatedWords">
+      <span>💛 Love</span>
+      <span>💫 Joy</span>
+      <span>🌸 Happiness</span>
+      <span>✨ Magic</span>
+      <span>💗 Smile</span>
+      <span>🌟 Dream</span>
+    </div>
+
+    <div id="surpriseWord" class="surprise">Happy Birthday, Greater Kamikazi! 🎉</div>
+    <div id="personalMessage" class="message">From your lovely Gilbert 💖 I wish you endless joy, peace, and light ✨</div>
+
+    <footer>Open this on <strong>13/11</strong> to see the surprise!</footer>
+  </div>
+</section>
+
+<section id="offers">
+  <div class="card">
+    <h2>🎁 Special Birthday Offers</h2>
+    <p>Because you deserve the best! Here are your special gifts:</p>
+    <ul style="list-style:none; padding:0;">
+      <li>🍫 A box of sweet surprises</li>
+    </ul>
+  </div>
+</section>
+
+<section id="to">
+  <div class="card">
+    <h2>To 🎀</h2>
+    <p><strong>Greater Kamikazi</strong></p>
+    <p>The one who shines brighter than the stars and fills every day with warmth 💕</p>
+  </div>
+</section>
+
+<section id="from">
+  <div class="card">
+    <h2>From 💖</h2>
+    <p><strong>Gilbert Nsengimana</strong></p>
+    <p>Wishing you all the beauty, love, and laughter life can offer ✨</p>
+  </div>
+</section>
+
+<section id="about">
+  <div class="card">
+    <h2>About This Page</h2>
+    <p>This page was crafted with love to celebrate a special birthday, filled with magic, joy, and heartfelt wishes ✨💖</p>
+    <p>Designed to be cozy on the eyes at night and delightful for every scroll!</p>
+  </div>
+</section>
+
+<canvas id="confettiCanvas"></canvas>
+
+<script>
+// Countdown & surprise logic
+const countEl = document.getElementById('count');
+const surpriseEl = document.getElementById('surpriseWord');
+const messageEl = document.getElementById('personalMessage');
+const revealBtn = document.getElementById('revealBtn');
+const copyBtn = document.getElementById('copyBtn');
+
+const BIRTH_MONTH = 11, BIRTH_DAY = 13;
+let target = new Date(new Date().getFullYear(), BIRTH_MONTH-1, BIRTH_DAY,0,0,0);
+if(new Date()>target) target = new Date(new Date().getFullYear()+1, BIRTH_MONTH-1, BIRTH_DAY,0,0,0);
+
+function updateCountdown(){
+  const now = new Date();
+  const diff = target - now;
+  if(diff <=0){
+    countEl.textContent = "It's the birthday! 🎉";
+    revealSurprise();
+    clearInterval(timer);
+    return;
+  }
+  const days = Math.floor(diff/(1000*60*60*24));
+  const hours = Math.floor((diff%(1000*60*60*24))/(1000*60*60));
+  const minutes = Math.floor((diff%(1000*60*60))/(1000*60));
+  const seconds = Math.floor((diff%(1000*60))/1000);
+  countEl.textContent = `${days}d ${hours}h ${minutes}m ${seconds}s`;
+}
+
+function revealSurprise(){
+  surpriseEl.classList.add('visible');
+  messageEl.classList.add('visible');
+  launchConfetti();
+}
+
+revealBtn.addEventListener('click',()=>{
+  const now=new Date();
+  if(now.getMonth()==BIRTH_MONTH-1 && now.getDate()==BIRTH_DAY){
+    revealSurprise();
+  }else{
+    alert('The surprise unlocks only on 13 November. Hold on — it will be worth it!');
+  }
+});
+
+copyBtn.addEventListener('click',async()=>{
+  try{
+    await navigator.clipboard.writeText(window.location.href);
+    alert('Link copied! You can share it now.');
+  }catch(e){
+    alert('Could not copy automatically. Copy manually from the address bar.');
+  }
+});
+
+function launchConfetti(){
+  const canvas=document.getElementById('confettiCanvas');
+  const ctx=canvas.getContext('2d');
+  canvas.width=window.innerWidth;
+  canvas.height=window.innerHeight;
+  const pieces=[];
+  const colors=['#ffb347','#ffd166','#6bf178','#6bd3ff','#c37bff'];
+  for(let i=0;i<120;i++){
+    pieces.push({
+      x:Math.random()*canvas.width,
+      y:Math.random()*-canvas.height,
+      w:6+Math.random()*10,
+      h:6+Math.random()*10,
+      rot:Math.random()*360,
+      speed:2+Math.random()*6,
+      color:colors[Math.floor(Math.random()*colors.length)]
+    });
+  }
+  let raf;
+  function frame(){
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+    for(const p of pieces){
+      p.y+=p.speed;
+      p.x+=Math.sin(p.y*0.01)*1.5;
+      ctx.save();
+      ctx.translate(p.x,p.y);
+      ctx.rotate(p.rot*Math.PI/180);
+      ctx.fillStyle=p.color;
+      ctx.fillRect(-p.w/2,-p.h/2,p.w,p.h);
+      ctx.restore();
+    }
+    raf=requestAnimationFrame(frame);
+  }
+  frame();
+  setTimeout(()=>{cancelAnimationFrame(raf); ctx.clearRect(0,0,canvas.width,canvas.height)},6000);
+}
+
+updateCountdown();
+const timer=setInterval(updateCountdown,1000);
+
+// Navbar active link on scroll
+const navLinks = document.querySelectorAll('nav a');
+window.addEventListener('scroll', ()=>{
+  let current = '';
+  document.querySelectorAll('section').forEach(section=>{
+    const sectionTop = section.offsetTop-80;
+    if(pageYOffset >= sectionTop) current = section.getAttribute('id');
+  });
+  navLinks.forEach(link=> link.classList.remove('active'));
+  document.querySelector('nav a[href="#'+current+'"]').classList.add('active');
+});
+</script>
+</body>
+</html>
