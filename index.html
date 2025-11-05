@@ -6,12 +6,12 @@
 <title>Happy Birthday Surprise</title>
 <style>
   :root {
-    --bg1: #2b1055;   /* deep midnight blue */
-    --bg2: #7597de;   /* elegant lavender-blue */
-    --accent: #ffb347; /* soft gold for highlights */
-    --text: #fff8e7;   /* creamy white text */
-    --green: #90ee90;  /* gentle pastel green */
-    --nav-bg: rgba(40,20,70,0.85); /* contrasting navbar */
+    --bg1: #2b1055;
+    --bg2: #7597de;
+    --accent: #ffb347;
+    --text: #fff8e7;
+    --green: #90ee90;
+    --nav-bg: rgba(40,20,70,0.85);
     --nav-hover: #ffb347;
   }
 
@@ -36,7 +36,6 @@
     scroll-snap-align: start;
   }
 
-  /* Navbar */
   nav {
     position: fixed;
     top: 0;
@@ -70,7 +69,6 @@
     transform: scale(1.05);
   }
 
-  /* Card styling */
   .card {
     width: 92%;
     max-width: 520px;
@@ -190,6 +188,27 @@
     box-shadow: 0 0 10px var(--accent);
   }
 
+  .offerCard {
+    flex: 1 1 250px;
+    background: rgba(255,255,255,0.08);
+    border-radius: 16px;
+    padding: 18px;
+    margin: 8px;
+    text-align: center;
+    font-weight: 600;
+    font-size: 1rem;
+    color: #ffe6eb;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.35);
+    backdrop-filter: blur(8px);
+    transition: transform 0.3s, box-shadow 0.3s;
+    cursor: pointer;
+  }
+
+  .offerCard:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(255,179,71,0.5);
+  }
+
   footer { 
     margin-top:16px; 
     font-size:0.85rem; 
@@ -207,11 +226,8 @@
     z-index:1; 
   }
 
-  /* FROM page background */
   #from { background: url('image/nsg.jpg') center/cover no-repeat; }
   #to { background: url('image/greater.jpg') center/cover no-repeat; }
-
-  /* About page night-friendly */
   #about { background: linear-gradient(180deg, #100d2c 0%, #2b1055 100%); }
 </style>
 </head>
@@ -230,12 +246,10 @@
     <h1>Birthday Surprise for Greater Kamikazi</h1>
     <div class="staticMessage">Counting down to a very special moment just for you! 💖</div>
     <div class="count" id="count">Loading countdown...</div>
-
     <div>
       <button class="btn" id="revealBtn">Try to reveal</button>
       <button class="btn" id="copyBtn">Copy link</button>
     </div>
-
     <div class="animatedWords">
       <span>💛 Love</span>
       <span>💫 Joy</span>
@@ -244,27 +258,31 @@
       <span>💗 Smile</span>
       <span>🌟 Dream</span>
     </div>
-
     <div id="surpriseWord" class="surprise">Happy Birthday, Greater Kamikazi! 🎉</div>
     <div id="personalMessage" class="message">From your lovely Gilbert 💖 I wish you endless joy, peace, and light ✨</div>
-
     <footer>Open this on <strong>13/11</strong> to see the surprise!</footer>
   </div>
 </section>
 
 <section id="offers">
-  <div class="card">
+  <div class="card" id="lockedOffers">
     <h2>🎁 Special Birthday Offers</h2>
-    <p>Because you deserve the best! Here are your special gifts:</p>
-    <ul style="list-style:none; padding:0;">
-      <li>🍫 A box of sweet surprises</li>
-    </ul>
+    <p id="offerMsg">Offers unlock on November 13 — please be patient 💌</p>
+    <div id="offerList" style="display:none; margin-top:20px; gap:16px; display:flex; flex-wrap:wrap; justify-content:center;">
+      <div class="offerCard">🍫 Sweet Chocolate Box</div>
+      <div class="offerCard">🌹 Fresh Bouquet of Roses</div>
+      <div class="offerCard">🎀 Personalized Gift Tag</div>
+      <div class="offerCard">✨ Magical Surprise Box</div>
+      <div class="offerCard">💖 Heartfelt Letter</div>
+      <div class="offerCard">🌟 Sparkling Keepsake</div>
+    </div>
+    <button id="openSurpriseBtn" class="btn" style="display:none; margin-top:16px;">Open Surprise</button>
   </div>
 </section>
 
 <section id="to">
   <div class="card">
-    <h2>To 🎀</h2>
+    <h2>TO : </h2>
     <p><strong>Greater Kamikazi</strong></p>
     <p>The one who shines brighter than the stars and fills every day with warmth 💕</p>
   </div>
@@ -272,7 +290,7 @@
 
 <section id="from">
   <div class="card">
-    <h2>From 💖</h2>
+    <h2>FROM :</h2>
     <p><strong>Gilbert Nsengimana</strong></p>
     <p>Wishing you all the beauty, love, and laughter life can offer ✨</p>
   </div>
@@ -336,61 +354,4 @@ copyBtn.addEventListener('click',async()=>{
     await navigator.clipboard.writeText(window.location.href);
     alert('Link copied! You can share it now.');
   }catch(e){
-    alert('Could not copy automatically. Copy manually from the address bar.');
-  }
-});
-
-function launchConfetti(){
-  const canvas=document.getElementById('confettiCanvas');
-  const ctx=canvas.getContext('2d');
-  canvas.width=window.innerWidth;
-  canvas.height=window.innerHeight;
-  const pieces=[];
-  const colors=['#ffb347','#ffd166','#6bf178','#6bd3ff','#c37bff'];
-  for(let i=0;i<120;i++){
-    pieces.push({
-      x:Math.random()*canvas.width,
-      y:Math.random()*-canvas.height,
-      w:6+Math.random()*10,
-      h:6+Math.random()*10,
-      rot:Math.random()*360,
-      speed:2+Math.random()*6,
-      color:colors[Math.floor(Math.random()*colors.length)]
-    });
-  }
-  let raf;
-  function frame(){
-    ctx.clearRect(0,0,canvas.width,canvas.height);
-    for(const p of pieces){
-      p.y+=p.speed;
-      p.x+=Math.sin(p.y*0.01)*1.5;
-      ctx.save();
-      ctx.translate(p.x,p.y);
-      ctx.rotate(p.rot*Math.PI/180);
-      ctx.fillStyle=p.color;
-      ctx.fillRect(-p.w/2,-p.h/2,p.w,p.h);
-      ctx.restore();
-    }
-    raf=requestAnimationFrame(frame);
-  }
-  frame();
-  setTimeout(()=>{cancelAnimationFrame(raf); ctx.clearRect(0,0,canvas.width,canvas.height)},6000);
-}
-
-updateCountdown();
-const timer=setInterval(updateCountdown,1000);
-
-// Navbar active link on scroll
-const navLinks = document.querySelectorAll('nav a');
-window.addEventListener('scroll', ()=>{
-  let current = '';
-  document.querySelectorAll('section').forEach(section=>{
-    const sectionTop = section.offsetTop-80;
-    if(pageYOffset >= sectionTop) current = section.getAttribute('id');
-  });
-  navLinks.forEach(link=> link.classList.remove('active'));
-  document.querySelector('nav a[href="#'+current+'"]').classList.add('active');
-});
-</script>
-</body>
-</html>
+    alert('Could not copy automatically. Copy manually
