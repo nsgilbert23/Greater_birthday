@@ -1,0 +1,241 @@
+<section id="offers">
+  <div class="card" id="lockedOffers">
+    <h2>🎁 Special Birthday Offers</h2>
+    <p id="offerMsg">Offers unlock on November 13 — please be patient 💌</p>
+
+    <div id="offerBoxes" class="gridBoxes">
+      <div class="offerCard" data-img="image/greater.jpg" data-words='["Cheers to Happiness 🎉","May Laughter Fill Your Days","Joy Beyond Imagination","More Love, More Light ✨"]'>
+        <span class="boxIcon">🎁</span>
+        <span class="boxLabel">Box 1</span>
+      </div>
+      <div class="offerCard" data-img="image/nsgreater.jpg" data-words='["Grow 🌱","Shine ✨","Dream Big!","Achieve Bigger!","Keep Reaching Higher 🌸"]'>
+        <span class="boxIcon">🎁</span>
+        <span class="boxLabel">Box 2</span>
+      </div>
+      <div class="offerCard" data-img="image/_.webp" data-words='["Enjoy","Forever & Always 💫","Endless Love & Magic"]'>
+        <span class="boxIcon">🎁</span>
+        <span class="boxLabel">Box 3</span>
+      </div>
+      <div class="offerCard" data-img="image/great.jpg" data-words='["Smile!","Shine!","Keep Smiling!"]'>
+        <span class="boxIcon">🎁</span>
+        <span class="boxLabel">Box 4</span>
+      </div>
+      <div class="offerCard" data-img="image/nsg.jpg" data-caption="Whenever you need me, I’ll be there 💖 Always by your side, through every smile and every challenge.">
+        <span class="boxIcon">🤝</span>
+        <span class="boxLabel">Box 5</span>
+      </div>
+      <div class="offerCard" data-img="image/song-placeholder.jpg" data-caption="Her favorite song (space to update later)">
+        <span class="boxIcon">🎵</span>
+        <span class="boxLabel">Box 6</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Fullscreen Overlay -->
+<div id="fullscreenOverlay">
+  <button class="closeBtn">&times;</button>
+  <img src="" alt="Offer Image" id="overlayImg">
+  <div id="overlayText"></div>
+  <button id="moreBtn" style="display:none; margin-top:10px; font-size:12px; font-style:italic;">More</button>
+</div>
+
+<style>
+:root {
+  --accent: #ffb347;
+  --text: #fff8e7;
+}
+
+.gridBoxes {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 20px;
+  justify-items: center;
+  margin-top: 20px;
+}
+
+.offerCard {
+  background: rgba(255,255,255,0.1);
+  backdrop-filter: blur(6px);
+  border-radius: 16px;
+  width: 120px;
+  height: 120px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  font-weight: bold;
+  color: var(--text);
+  text-align: center;
+  transition: transform 0.3s, box-shadow 0.3s;
+  position: relative;
+}
+
+.offerCard:hover {
+  transform: scale(1.1);
+  box-shadow: 0 0 12px var(--accent);
+}
+
+.boxIcon {
+  font-size: 2rem;
+  margin-bottom: 6px;
+}
+
+.boxLabel {
+  font-size: 0.9rem;
+}
+
+#fullscreenOverlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0,0,0,0.9);
+  justify-content: center;
+  align-items: center;
+  z-index: 50;
+  flex-direction: column;
+  padding: 10px;
+  overflow: hidden;
+}
+
+#fullscreenOverlay img {
+  max-width: 95vw;
+  max-height: 80vh;
+  object-fit: contain;
+  border-radius: 12px;
+  box-shadow: 0 8px 30px rgba(255,255,255,0.3);
+}
+
+#overlayText {
+  margin-top: 16px;
+  font-size: 12px;
+  font-style: italic;
+  text-align: center;
+  text-shadow: 0 0 8px rgba(0,0,0,0.6);
+  max-width: 90%;
+}
+
+#overlayText.locked {
+  color: var(--accent);
+}
+
+#overlayText.locked .lockIcon {
+  font-size: 1.5rem;
+  vertical-align: middle;
+  margin-right: 6px;
+}
+
+#fullscreenOverlay .closeBtn {
+  position: absolute;
+  top: 16px;
+  right: 20px;
+  font-size: 1.8rem;
+  font-weight: bold;
+  color: var(--accent);
+  cursor: pointer;
+  background: rgba(0,0,0,0.3);
+  border: none;
+  border-radius: 8px;
+  padding: 4px 8px;
+  transition: all 0.3s;
+}
+
+#fullscreenOverlay .closeBtn:hover {
+  background: rgba(255,255,255,0.2);
+  color: #fff;
+}
+
+#moreBtn {
+  background: rgba(0,0,0,0.2);
+  color: var(--accent);
+  border: none;
+  border-radius: 6px;
+  padding: 4px 8px;
+  cursor: pointer;
+}
+#moreBtn:hover {
+  background: rgba(255,255,255,0.2);
+}
+</style>
+
+<script>
+const overlay = document.getElementById('fullscreenOverlay');
+const overlayImg = document.getElementById('overlayImg');
+const overlayText = document.getElementById('overlayText');
+const moreBtn = document.getElementById('moreBtn');
+const closeBtn = document.querySelector('#fullscreenOverlay .closeBtn');
+
+let words = [];
+let currentIndex = 0;
+
+// Set unlock date & time: 13th November, 8:00 AM
+const unlockTime = new Date();
+unlockTime.setMonth(10); // November (0-indexed)
+unlockTime.setDate(13);
+unlockTime.setHours(8,0,0,0);
+
+document.querySelectorAll('.offerCard').forEach(card => {
+  card.addEventListener('click', () => {
+    const now = new Date();
+    
+    if(now < unlockTime){
+      overlayImg.src = "";
+      overlayText.innerHTML = '<span class="lockIcon">🔒</span>Be patient till 13th November, 8:00 AM 💌';
+      overlayText.classList.add('locked');
+      moreBtn.style.display = 'none';
+      overlay.style.display = 'flex';
+      return;
+    } else {
+      overlayText.classList.remove('locked');
+    }
+
+    const imgSrc = card.getAttribute('data-img');
+    const wordsData = card.getAttribute('data-words');
+    const caption = card.getAttribute('data-caption');
+
+    overlayImg.src = imgSrc;
+    overlay.style.display = 'flex';
+    currentIndex = 0;
+
+    if(wordsData){
+      words = JSON.parse(wordsData);
+      overlayText.textContent = words.slice(0,2).join(' | ');
+      if(words.length > 2){
+        moreBtn.style.display = 'inline-block';
+      } else {
+        moreBtn.style.display = 'none';
+      }
+    } else {
+      overlayText.textContent = caption;
+      moreBtn.style.display = 'none';
+    }
+  });
+});
+
+moreBtn.addEventListener('click', () => {
+  currentIndex += 2;
+  if(currentIndex < words.length){
+    overlayText.textContent = overlayText.textContent + ' | ' + words.slice(currentIndex, currentIndex+2).join(' | ');
+    if(currentIndex + 2 >= words.length){
+      moreBtn.style.display = 'none';
+    }
+  } else {
+    moreBtn.style.display = 'none';
+  }
+});
+
+closeBtn.addEventListener('click', () => {
+  overlay.style.display = 'none';
+  overlayImg.src = '';
+  overlayText.textContent = '';
+  moreBtn.style.display = 'none';
+});
+
+overlay.addEventListener('click', e => {
+  if(e.target === overlay) closeBtn.click();
+});
+</script>
