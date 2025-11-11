@@ -1,64 +1,50 @@
-<section id="offers">
-  <div class="card" id="lockedOffers">
-    <h2>🎁 Special Birthday Offers</h2>
-    <p id="offerMsg">Offers unlock on November 13 — please be patient 💌</p>
-
-    <div id="offerBoxes" class="gridBoxes">
-      <div class="offerCard" data-img="image/greater.jpg" data-words='["Cheers to Happiness 🎉","May Laughter Fill Your Days","Joy Beyond Imagination","More Love, More Light ✨"]'>
-        <span class="boxIcon">🎁</span>
-        <span class="boxLabel">Box 1</span>
-      </div>
-      <div class="offerCard" data-img="image/nsgreater.jpg" data-words='["Grow 🌱","Shine ✨","Dream Big!","Achieve Bigger!","Keep Reaching Higher 🌸"]'>
-        <span class="boxIcon">🎁</span>
-        <span class="boxLabel">Box 2</span>
-      </div>
-      <div class="offerCard" data-img="image/_.webp" data-words='["Enjoy","Forever & Always 💫","Endless Love & Magic"]'>
-        <span class="boxIcon">🎁</span>
-        <span class="boxLabel">Box 3</span>
-      </div>
-      <div class="offerCard" data-img="image/great.jpg" data-words='["Smile!","Shine!","Keep Smiling!"]'>
-        <span class="boxIcon">🎁</span>
-        <span class="boxLabel">Box 4</span>
-      </div>
-      <div class="offerCard" data-img="image/nsg.jpg" data-caption="Whenever you need me, I’ll be there 💖 Always by your side, through every smile and every challenge.">
-        <span class="boxIcon">🤝</span>
-        <span class="boxLabel">Box 5</span>
-      </div>
-      <div class="offerCard" data-img="image/song-placeholder.jpg" data-caption="Her favorite song (space to update later)">
-        <span class="boxIcon">🎵</span>
-        <span class="boxLabel">Box 6</span>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- Fullscreen Overlay -->
-<div id="fullscreenOverlay">
-  <button class="closeBtn">&times;</button>
-  <img src="" alt="Offer Image" id="overlayImg">
-  <div id="overlayText"></div>
-  <button id="moreBtn" style="display:none; margin-top:10px; font-size:12px; font-style:italic;">More</button>
-</div>
-
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🎁 Special Birthday Offers</title>
 <style>
 :root {
   --accent: #ffb347;
   --text: #fff8e7;
 }
 
-.gridBoxes {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-  gap: 20px;
-  justify-items: center;
-  margin-top: 20px;
+/* Overall section */
+#lockedOffers {
+  text-align: center;
+  color: var(--text);
+  font-family: 'Poppins', sans-serif;
 }
 
+/* Header and message */
+#lockedOffers h2 {
+  margin-top: 20px;
+  font-size: 1.4rem;
+}
+
+#lockedOffers #offerMsg {
+  font-size: 0.95rem;
+  margin-bottom: 15px;
+}
+
+/* Grid or stacked boxes */
+.gridBoxes {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 18px;
+  justify-items: center;
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+/* Offer card styles */
 .offerCard {
-  background: rgba(255,255,255,0.1);
+  background: rgba(255,255,255,0.08);
   backdrop-filter: blur(6px);
-  border-radius: 16px;
-  width: 120px;
+  border-radius: 14px;
+  width: 160px;
   height: 120px;
   display: flex;
   flex-direction: column;
@@ -67,25 +53,29 @@
   cursor: pointer;
   font-weight: bold;
   color: var(--text);
-  text-align: center;
   transition: transform 0.3s, box-shadow 0.3s;
-  position: relative;
 }
 
 .offerCard:hover {
-  transform: scale(1.1);
-  box-shadow: 0 0 12px var(--accent);
+  transform: scale(1.05);
+  box-shadow: 0 0 10px var(--accent);
 }
 
 .boxIcon {
   font-size: 2rem;
-  margin-bottom: 6px;
+  margin-bottom: 8px;
 }
 
 .boxLabel {
   font-size: 0.9rem;
 }
 
+/* Locked state style */
+.locked {
+  opacity: 0.7;
+}
+
+/* Fullscreen overlay */
 #fullscreenOverlay {
   display: none;
   position: fixed;
@@ -96,37 +86,26 @@
   background: rgba(0,0,0,0.9);
   justify-content: center;
   align-items: center;
-  z-index: 50;
   flex-direction: column;
+  z-index: 100;
   padding: 10px;
-  overflow: hidden;
 }
 
 #fullscreenOverlay img {
-  max-width: 95vw;
-  max-height: 80vh;
-  object-fit: contain;
+  max-width: 90%;
+  max-height: 70vh;
   border-radius: 12px;
-  box-shadow: 0 8px 30px rgba(255,255,255,0.3);
+  box-shadow: 0 6px 25px rgba(255,255,255,0.3);
 }
 
 #overlayText {
   margin-top: 16px;
+  color: var(--accent);
   font-size: 12px;
   font-style: italic;
   text-align: center;
-  text-shadow: 0 0 8px rgba(0,0,0,0.6);
-  max-width: 90%;
-}
-
-#overlayText.locked {
-  color: var(--accent);
-}
-
-#overlayText.locked .lockIcon {
-  font-size: 1.5rem;
-  vertical-align: middle;
-  margin-right: 6px;
+  line-height: 1.4;
+  max-width: 85%;
 }
 
 #fullscreenOverlay .closeBtn {
@@ -136,12 +115,11 @@
   font-size: 1.8rem;
   font-weight: bold;
   color: var(--accent);
-  cursor: pointer;
   background: rgba(0,0,0,0.3);
   border: none;
   border-radius: 8px;
+  cursor: pointer;
   padding: 4px 8px;
-  transition: all 0.3s;
 }
 
 #fullscreenOverlay .closeBtn:hover {
@@ -150,17 +128,108 @@
 }
 
 #moreBtn {
-  background: rgba(0,0,0,0.2);
+  display: none;
+  background: rgba(255,255,255,0.1);
   color: var(--accent);
   border: none;
   border-radius: 6px;
   padding: 4px 8px;
   cursor: pointer;
+  font-size: 12px;
+  font-style: italic;
+  margin-top: 10px;
 }
+
 #moreBtn:hover {
   background: rgba(255,255,255,0.2);
 }
+
+.download-btn {
+  margin-top: 25px;
+  background: var(--accent);
+  color: #000;
+  border: none;
+  border-radius: 10px;
+  padding: 10px 18px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+.download-btn:hover {
+  background: #ffd27f;
+}
+
+/* 📱 MOBILE */
+@media (max-width: 640px) {
+  .gridBoxes {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    padding: 0 20px;
+  }
+  .offerCard {
+    width: 100%;
+    height: auto;
+    padding: 16px 0;
+  }
+  .boxIcon {
+    font-size: 2rem;
+  }
+  .boxLabel {
+    font-size: 1rem;
+  }
+}
 </style>
+</head>
+<body style="background:#000;">
+
+<section id="offers">
+  <div class="card" id="lockedOffers">
+    <h2>🎁 Special Birthday Offers</h2>
+    <p id="offerMsg">Offers unlock on November 13 at 8:00 AM — please be patient 💌</p>
+
+    <div id="offerBoxes" class="gridBoxes">
+      <div class="offerCard locked" data-img="image/greater.jpg" data-words='["Cheers to Happiness 🎉","May Laughter Fill Your Days","Joy Beyond Imagination","More Love, More Light ✨"]'>
+        <span class="boxIcon">🎁</span>
+        <span class="boxLabel">Box 1</span>
+      </div>
+      <div class="offerCard locked" data-img="image/nsgreater.jpg" data-words='["Grow 🌱","Shine ✨","Dream Big!","Achieve Bigger!","Keep Reaching Higher 🌸"]'>
+        <span class="boxIcon">🎁</span>
+        <span class="boxLabel">Box 2</span>
+      </div>
+      <div class="offerCard locked" data-img="image/_.webp" data-words='["Enjoy","Forever & Always 💫","Endless Love & Magic"]'>
+        <span class="boxIcon">🎁</span>
+        <span class="boxLabel">Box 3</span>
+      </div>
+      <div class="offerCard locked" data-img="image/great.jpg" data-words='["Smile!","Shine!","Keep Smiling!"]'>
+        <span class="boxIcon">🎁</span>
+        <span class="boxLabel">Box 4</span>
+      </div>
+      <div class="offerCard locked" data-img="image/nsg.jpg" data-caption="Whenever you need me, I’ll be there 💖 Always by your side, through every smile and every challenge.">
+        <span class="boxIcon">🤝</span>
+        <span class="boxLabel">Box 5</span>
+      </div>
+      <div class="offerCard locked" data-img="image/song-placeholder.jpg" data-caption="Her favorite song (space to update later)">
+        <span class="boxIcon">🎵</span>
+        <span class="boxLabel">Box 6</span>
+      </div>
+    </div>
+
+    <button class="download-btn" id="downloadBtn">⬇️ Download PDF</button>
+  </div>
+</section>
+
+<!-- Fullscreen Overlay -->
+<div id="fullscreenOverlay">
+  <button class="closeBtn">&times;</button>
+  <img src="" alt="Offer Image" id="overlayImg">
+  <div id="overlayText"></div>
+  <button id="moreBtn">More</button>
+</div>
+
+<!-- Libraries -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 
 <script>
 const overlay = document.getElementById('fullscreenOverlay');
@@ -168,29 +237,23 @@ const overlayImg = document.getElementById('overlayImg');
 const overlayText = document.getElementById('overlayText');
 const moreBtn = document.getElementById('moreBtn');
 const closeBtn = document.querySelector('#fullscreenOverlay .closeBtn');
+const unlockDate = new Date('November 13, 2025 08:00:00').getTime();
+let now = new Date().getTime();
 
 let words = [];
 let currentIndex = 0;
 
-// Set unlock date & time: 13th November, 8:00 AM
-const unlockTime = new Date();
-unlockTime.setMonth(10); // November (0-indexed)
-unlockTime.setDate(13);
-unlockTime.setHours(8,0,0,0);
-
 document.querySelectorAll('.offerCard').forEach(card => {
   card.addEventListener('click', () => {
-    const now = new Date();
-    
-    if(now < unlockTime){
-      overlayImg.src = "";
-      overlayText.innerHTML = '<span class="lockIcon">🔒</span>Be patient till 13th November, 8:00 AM 💌';
-      overlayText.classList.add('locked');
-      moreBtn.style.display = 'none';
-      overlay.style.display = 'flex';
+    now = new Date().getTime();
+    overlay.style.display = 'flex';
+    overlayImg.src = '';
+    overlayText.textContent = '';
+    moreBtn.style.display = 'none';
+
+    if(now < unlockDate){
+      overlayText.innerHTML = `<span style="font-size:18px;">🔒</span><br>Be patient till <b>13th November, 8:00 AM</b>`;
       return;
-    } else {
-      overlayText.classList.remove('locked');
     }
 
     const imgSrc = card.getAttribute('data-img');
@@ -198,20 +261,14 @@ document.querySelectorAll('.offerCard').forEach(card => {
     const caption = card.getAttribute('data-caption');
 
     overlayImg.src = imgSrc;
-    overlay.style.display = 'flex';
     currentIndex = 0;
 
     if(wordsData){
       words = JSON.parse(wordsData);
       overlayText.textContent = words.slice(0,2).join(' | ');
-      if(words.length > 2){
-        moreBtn.style.display = 'inline-block';
-      } else {
-        moreBtn.style.display = 'none';
-      }
+      if(words.length > 2) moreBtn.style.display = 'inline-block';
     } else {
       overlayText.textContent = caption;
-      moreBtn.style.display = 'none';
     }
   });
 });
@@ -219,10 +276,8 @@ document.querySelectorAll('.offerCard').forEach(card => {
 moreBtn.addEventListener('click', () => {
   currentIndex += 2;
   if(currentIndex < words.length){
-    overlayText.textContent = overlayText.textContent + ' | ' + words.slice(currentIndex, currentIndex+2).join(' | ');
-    if(currentIndex + 2 >= words.length){
-      moreBtn.style.display = 'none';
-    }
+    overlayText.textContent += ' | ' + words.slice(currentIndex, currentIndex+2).join(' | ');
+    if(currentIndex + 2 >= words.length) moreBtn.style.display = 'none';
   } else {
     moreBtn.style.display = 'none';
   }
@@ -230,12 +285,27 @@ moreBtn.addEventListener('click', () => {
 
 closeBtn.addEventListener('click', () => {
   overlay.style.display = 'none';
-  overlayImg.src = '';
-  overlayText.textContent = '';
-  moreBtn.style.display = 'none';
 });
 
 overlay.addEventListener('click', e => {
   if(e.target === overlay) closeBtn.click();
 });
+
+// PDF download
+document.getElementById("downloadBtn").addEventListener("click", async () => {
+  const { jsPDF } = window.jspdf;
+  const card = document.getElementById("lockedOffers");
+
+  const canvas = await html2canvas(card, { scale: 2 });
+  const imgData = canvas.toDataURL("image/png");
+
+  const pdf = new jsPDF("p", "mm", "a4");
+  const width = pdf.internal.pageSize.getWidth();
+  const height = (canvas.height * width) / canvas.width;
+
+  pdf.addImage(imgData, "PNG", 0, 0, width, height);
+  pdf.save("Birthday_Offers.pdf");
+});
 </script>
+</body>
+</html>
