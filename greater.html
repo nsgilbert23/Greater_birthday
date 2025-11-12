@@ -73,7 +73,8 @@ body {
   z-index: 100;
   padding: 10px;
 }
-#fullscreenOverlay img {
+#fullscreenOverlay img,
+#fullscreenOverlay video {
   max-width: 90%;
   max-height: 70vh;
   border-radius: 12px;
@@ -120,7 +121,7 @@ body {
     <p>Offers unlock on November 13 at 8:00 AM — please be patient 💌</p>
 
     <div class="gridBoxes">
-      <!-- Box 1–4 (Gift boxes) -->
+      <!-- Box 1–4 -->
       <div class="offerCard locked" data-img="image/greater.jpg" data-words='["Cheers to Happiness 🎉","May Laughter Fill Your Days","Joy Beyond Imagination","More Love, More Light ✨"]'>
         <span class="boxIcon">🎁</span>
         <span class="boxLabel">Box 1</span>
@@ -144,8 +145,10 @@ body {
         <span class="boxLabel">Box 5</span>
       </div>
 
-      <!-- Box 6 -->
-      <div class="offerCard locked" data-video = "video/birtday."data-caption="Her favorite song (space to update later)">
+      <!-- Box 6 (Multiple Videos) -->
+      <div class="offerCard locked" 
+           data-videos='["video/birthday.mp4","video/celebration.mp4"]' 
+           data-caption="Her favorite songs — feel the rhythm of joy 🎶">
         <span class="boxIcon">🎵</span>
         <span class="boxLabel">Box 6</span>
       </div>
@@ -159,6 +162,7 @@ body {
 <div id="fullscreenOverlay">
   <button class="closeBtn">&times;</button>
   <img src="" alt="Offer Image" id="overlayImg">
+  <video id="overlayVideo" controls style="display:none;"></video>
   <div id="overlayText"></div>
 </div>
 
@@ -169,6 +173,7 @@ body {
 <script>
 const overlay = document.getElementById('fullscreenOverlay');
 const overlayImg = document.getElementById('overlayImg');
+const overlayVideo = document.getElementById('overlayVideo');
 const overlayText = document.getElementById('overlayText');
 const closeBtn = document.querySelector('.closeBtn');
 const unlockDate = new Date('November 13, 2025 08:00:00').getTime();
@@ -177,31 +182,61 @@ document.querySelectorAll('.offerCard').forEach(card => {
   card.addEventListener('click', () => {
     const now = new Date().getTime();
     overlay.style.display = 'flex';
+    overlayImg.style.display = 'none';
+    overlayVideo.style.display = 'none';
+    overlayText.textContent = '';
+
     if (now < unlockDate) {
       overlayText.innerHTML = `<span style="font-size:18px;">🔒</span><br>Be patient till <b>13 November, 8:00 AM</b>`;
-      overlayImg.src = '';
       return;
     }
 
     const imgSrc = card.getAttribute('data-img');
     const wordsData = card.getAttribute('data-words');
     const caption = card.getAttribute('data-caption');
-    overlayImg.src = imgSrc ? imgSrc : '';
-    overlayText.textContent = '';
+    const videoData = card.getAttribute('data-videos');
 
-    if (wordsData) {
-      const words = JSON.parse(wordsData);
-      overlayText.textContent = words.slice(0, 2).join(' | ');
-    } else if (caption) {
-      overlayText.textContent = caption;
-    } else {
+    if (videoData) {
+      // 🎬 Multiple videos support
+      const videos = JSON.parse(videoData);
+      let current = 0;
+      overlayVideo.src = videos[current];
+      overlayVideo.style.display = 'block';
+      overlayVideo.play();
+      overlayText.textContent = caption || 'Enjoy the vibes 🎶';
+      
+      overlayVideo.onended = () => {
+        current = (current + 1) % videos.length;
+        overlayVideo.src = videos[current];
+        overlayVideo.play();
+      };
+    } 
+    else if (imgSrc) {
+      overlayImg.src = imgSrc;
+      overlayImg.style.display = 'block';
+      if (wordsData) {
+        const words = JSON.parse(wordsData);
+        overlayText.textContent = words.slice(0, 2).join(' | ');
+      } else if (caption) {
+        overlayText.textContent = caption;
+      }
+    } 
+    else {
       overlayText.textContent = '🎵 Song to be added soon 🎶';
     }
   });
 });
 
-closeBtn.addEventListener('click', () => overlay.style.display = 'none');
-overlay.addEventListener('click', e => { if (e.target === overlay) overlay.style.display = 'none'; });
+closeBtn.addEventListener('click', () => {
+  overlay.style.display = 'none';
+  overlayVideo.pause();
+});
+overlay.addEventListener('click', e => { 
+  if (e.target === overlay) {
+    overlay.style.display = 'none';
+    overlayVideo.pause();
+  }
+});
 
 // ✅ Working PDF Download (all 6 boxes)
 document.getElementById("downloadBtn").addEventListener("click", async () => {
