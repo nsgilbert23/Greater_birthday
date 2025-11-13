@@ -331,77 +331,7 @@ canvas {
   </div>
 </section>
 
-<canvas id="confettiCanvas"></canvas>
 
-<script>
-// Countdown & surprise logic
-const countEl = document.getElementById('count');
-const surpriseEl = document.getElementById('surpriseWord');
-const messageEl = document.getElementById('personalMessage');
-const revealBtn = document.getElementById('revealBtn');
-const copyBtn = document.getElementById('copyBtn');
-const offerList = document.getElementById('offerList');
-const openOfferBtn = document.getElementById('openSurpriseBtn');
-
-const BIRTH_MONTH = 11, BIRTH_DAY = 13;
-let target = new Date(new Date().getFullYear(), BIRTH_MONTH-1, BIRTH_DAY,0,0,0);
-if(new Date()>target) target = new Date(new Date().getFullYear()+1, BIRTH_MONTH-1, BIRTH_DAY,0,0,0);
-
-function updateCountdown(){
-  const now = new Date();
-  const diff = target - now;
-  if(diff <=0){
-    countEl.textContent = "It's the birthday! 🎉";
-    revealSurprise();
-    clearInterval(timer);
-    return;
-  }
-  const days = Math.floor(diff/(1000*60*60*24));
-  const hours = Math.floor((diff%(1000*60*60*24))/(1000*60*60));
-  const minutes = Math.floor((diff%(1000*60*60))/(1000*60));
-  const seconds = Math.floor((diff%(1000*60))/1000);
-  countEl.textContent = `${days}d ${hours}h ${minutes}m ${seconds}s`;
-}
-
-function revealSurprise(){
-  surpriseEl.classList.add('visible');
-  messageEl.classList.add('visible');
-  launchConfetti();
-}
-
-revealBtn.addEventListener('click',()=>{
-  const now=new Date();
-  if(now.getMonth()==BIRTH_MONTH-1 && now.getDate()==BIRTH_DAY){
-    revealSurprise();
-  }else{
-    alert('The surprise unlocks only on 13 November. Hold on — it will be worth it!');
-  }
-});
-
-copyBtn.addEventListener('click',async()=>{
-  try{
-    await navigator.clipboard.writeText(window.location.href);
-    alert('Link copied! You can share it now.');
-  }catch(e){
-    alert('Could not copy automatically. Copy manually from the address bar.');
-  }
-});
-
-function launchConfetti(){
-  const canvas=document.getElementById('confettiCanvas');
-  const ctx=canvas.getContext('2d');
-  canvas.width=window.innerWidth;
-  canvas.height=window.innerHeight;
-  const pieces=[];
-  const colors=['#ffb347','#ffd166','#6bf178','#6bd3ff','#c37bff'];
-  for(let i=0;i<120;i++){
-    pieces.push({ x:Math.random()*canvas.width, y:Math.random()*-canvas.height, w:6+Math.random()*10, h:6+Math.random()*10, rot:Math.random()*360, speed:2+Math.random()*6, color:colors[Math.floor(Math.random()*colors.length)] });
-  }
-  let raf;
-  function frame(){ ctx.clearRect(0,0,canvas.width,canvas.height); for(const p of pieces){ p.y+=p.speed; p.x+=Math.sin(p.y*0.01)*1.5; ctx.save(); ctx.translate(p.x,p.y); ctx.rotate(p.rot*Math.PI/180); ctx.fillStyle=p.color; ctx.fillRect(-p.w/2,-p.h/2,p.w,p.h); ctx.restore(); } raf=requestAnimationFrame(frame); }
-  frame();
-  setTimeout(()=>{cancelAnimationFrame(raf); ctx.clearRect(0,0,canvas.width,canvas.height)},6000);
-}
 
 // Offers unlock logic
 function checkOfferUnlock() {
