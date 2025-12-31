@@ -3,373 +3,313 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Happy Birthday Surprise</title>
+
+<title>🎆 Happy New Year 🎆</title>
+
 <style>
 :root {
-  --bg1: #2b1055;
-  --bg2: #7597de;
-  --accent: #ffb347;
-  --text: #fff8e7;
-  --green: #90ee90;
-  --nav-bg: rgba(40,20,70,0.85);
-  --nav-hover: #ffb347;
+  --bg1:#140f2d;
+  --bg2:#2b1055;
+  --accent:#ffcc70;
+  --text:#ffffff;
+  --green:#9effa1;
 }
 
-html, body {
-  height: 100%;
-  margin: 0;
-  font-family: system-ui, -apple-system, Segoe UI, Roboto, 'Helvetica Neue', Arial;
-  background: linear-gradient(145deg, var(--bg1) 10%, var(--bg2) 90%);
-  color: var(--text);
-  scroll-behavior: smooth;
-  overflow-x: hidden;
-  scroll-snap-type: y mandatory;
+* { box-sizing:border-box; }
+
+html,body {
+  margin:0;
+  height:100%;
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial;
+  background: linear-gradient(160deg,var(--bg1),var(--bg2));
+  color:var(--text);
+  overflow:hidden;
 }
 
-section {
-  min-height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  padding: 80px 20px 40px;
-  scroll-snap-align: start;
-}
-
-nav {
-  position: fixed;
-  top: 0;
-  width: 100%;
-  background: var(--nav-bg);
-  display: flex;
-  justify-content: center;
-  gap: 24px;
-  padding: 12px 0;
-  backdrop-filter: blur(10px);
-  box-shadow: 0 4px 20px rgba(0,0,0,0.4);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.15);
-  z-index: 20;
-}
-
-nav a {
-  color: #ffe6eb;
-  text-decoration: none;
-  font-weight: 600;
-  letter-spacing: 0.6px;
-  font-size: 1rem;
-  padding: 6px 12px;
-  border-radius: 10px;
-  transition: all 0.3s ease;
-}
-
-nav a:hover, nav a.active {
-  background: rgba(255, 182, 193, 0.25);
-  color: #fff;
-  box-shadow: 0 0 12px var(--nav-hover);
-  transform: scale(1.05);
+.wrapper {
+  min-height:100vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:16px;
 }
 
 .card {
-  width: 92%;
-  max-width: 520px;
-  padding: 30px;
-  border-radius: 20px;
-  background: rgba(255,255,255,0.07);
-  box-shadow: 0 8px 30px rgba(0,0,0,0.5);
-  text-align: center;
-  position: relative;
-  z-index: 2;
-  backdrop-filter: blur(10px);
+  width:100%;
+  max-width:420px;
+  background:rgba(255,255,255,0.08);
+  border-radius:22px;
+  padding:26px 22px;
+  text-align:center;
+  backdrop-filter:blur(12px);
+  box-shadow:0 10px 40px rgba(0,0,0,.5);
 }
 
-h1 { 
-  margin:0 0 10px; 
-  font-size:2rem; 
-  letter-spacing:0.6px;
-  color: var(--accent);
-  text-shadow: 0 3px 20px rgba(255, 179, 71, 0.4);
+h1 {
+  font-size:1.8rem;
+  margin-bottom:8px;
+  color:var(--accent);
 }
 
-.count { 
-  font-size:1.5rem; 
-  margin-bottom:14px; 
-  font-weight:bold; 
-  color: var(--accent); 
-  text-shadow: 0 2px 10px rgba(0,0,0,0.6);
+.sub {
+  font-size:0.95rem;
+  opacity:0.85;
+  margin-bottom:14px;
 }
 
-.staticMessage { 
-  font-size:1rem; 
-  margin-bottom:10px; 
-  color: rgba(255,255,255,0.85); 
-}
-
-.surprise { 
-  margin-top:20px; 
-  font-size:2.4rem; 
-  font-weight:700; 
-  letter-spacing:2px; 
-  opacity:0; 
-  transform:scale(0.6); 
-  transition:all 0.7s cubic-bezier(.2,.9,.3,1); 
-}
-
-.surprise.visible { 
-  opacity:1; 
-  transform:scale(1); 
-  color:var(--accent); 
-  text-shadow:0 6px 30px rgba(255,179,71,0.5); 
-}
-
-.message { 
-  font-size:1.2rem; 
-  margin-top:20px; 
-  color: var(--green); 
-  text-align:center; 
-  opacity:0; 
-  transition: all 1s; 
-  position:relative; 
-}
-
-.message.visible { 
-  opacity:1; 
-  animation:sparkle 1.5s ease-in-out infinite alternate; 
-}
-
-@keyframes sparkle { 
-  0%{text-shadow:0 0 3px var(--green),0 0 8px var(--green);} 
-  50%{text-shadow:0 0 8px var(--green),0 0 15px var(--green);} 
-  100%{text-shadow:0 0 3px var(--green),0 0 8px var(--green);} 
-}
-
-.animatedWords {
-  display:flex;
-  flex-wrap:wrap;
-  justify-content:center;
-  gap:12px;
-  margin-top:18px;
-}
-
-.animatedWords span {
-  font-size:1.3rem;
+.countdown {
+  font-size:1.4rem;
   font-weight:700;
-  color:#ffe082;
-  text-shadow:0 0 10px #fff, 0 0 20px #ffb347;
-  animation:floatUp 3s ease-in-out infinite alternate;
-}
-
-.animatedWords span:nth-child(2) { color:#9effff; animation-duration:3.5s; }
-.animatedWords span:nth-child(3) { color:#ffff99; animation-duration:4s; }
-.animatedWords span:nth-child(4) { color:#b2ff9e; animation-duration:3.2s; }
-.animatedWords span:nth-child(5) { color:#ffa366; animation-duration:3.8s; }
-.animatedWords span:nth-child(6) { color:#d4a5ff; animation-duration:3.6s; }
-
-@keyframes floatUp { 
-  0%{transform:translateY(0);} 
-  50%{transform:translateY(-10px);} 
-  100%{transform:translateY(0);} 
+  margin-bottom:18px;
+  color:var(--accent);
 }
 
 .btn {
-  display:inline-block;
-  padding:10px 16px;
-  border-radius:10px;
-  background:transparent;
-  border:1px solid rgba(255,255,255,0.4);
+  width:100%;
+  padding:12px;
+  margin:6px 0;
+  border-radius:12px;
+  border:none;
+  background:rgba(255,255,255,0.12);
+  color:white;
+  font-size:1rem;
   cursor:pointer;
-  color:var(--text);
-  backdrop-filter:blur(4px);
-  margin:4px;
-  transition:0.3s;
 }
 
-.btn:hover { 
-  background: rgba(255,255,255,0.1);
-  box-shadow: 0 0 10px var(--accent);
+.btn:active { transform:scale(0.97); }
+
+.surprise {
+  margin-top:20px;
+  font-size:1.7rem;
+  font-weight:700;
+  opacity:0;
+  transform:scale(.6);
+  transition:.7s;
+  color:var(--accent);
 }
 
-.offerCard {
-  flex: 1 1 250px;
-  background: rgba(255,255,255,0.08);
-  border-radius: 16px;
-  padding: 18px;
-  margin: 8px;
-  text-align: center;
-  font-weight: 600;
-  font-size: 1rem;
-  color: #ffe6eb;
-  box-shadow: 0 6px 20px rgba(0,0,0,0.35);
-  backdrop-filter: blur(8px);
-  transition: transform 0.3s, box-shadow 0.3s;
-  cursor: pointer;
+.surprise.show {
+  opacity:1;
+  transform:scale(1);
 }
 
-.offerCard:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 10px 25px rgba(255,179,71,0.5);
+.message {
+  margin-top:14px;
+  font-size:1.05rem;
+  color:var(--green);
+  opacity:0;
+  transition:1s;
 }
 
-footer { 
-  margin-top:16px; 
-  font-size:0.85rem; 
-  color:rgba(255,240,243,0.8); 
-  text-align:center; 
+.message.show {
+  opacity:1;
+  animation:glow 1.6s infinite alternate;
 }
 
-canvas { 
-  position:fixed; 
-  top:0; 
-  left:0; 
-  width:100%; 
-  height:100%; 
-  pointer-events:none; 
-  z-index:1; 
+@keyframes glow {
+  from { text-shadow:0 0 6px var(--green); }
+  to   { text-shadow:0 0 16px var(--green); }
 }
 
-#from { background: url('image/nsg.jpg') center/cover no-repeat; }
-#to { background: url('image/greater.jpg') center/cover no-repeat; }
-#about { background: linear-gradient(180deg, #100d2c 0%, #2b1055 100%); }
+/* ECARD */
+.ecard {
+  margin-top:22px;
+  padding:16px;
+  border-radius:18px;
+  background:rgba(255,255,255,0.1);
+  backdrop-filter:blur(10px);
+  display:none;
+}
+
+.ecard h3 {
+  margin-bottom:6px;
+  color:#ffe9b3;
+}
+
+.ecard p {
+  font-size:.85rem;
+  opacity:.85;
+}
+
+.gallery {
+  display:flex;
+  gap:12px;
+  overflow-x:auto;
+  scroll-snap-type:x mandatory;
+  padding-bottom:6px;
+}
+
+.gallery img {
+  flex:0 0 85%;
+  max-width:85%;
+  border-radius:14px;
+  scroll-snap-align:center;
+  box-shadow:0 10px 30px rgba(0,0,0,.5);
+  cursor:pointer;
+}
+
+.gallery::-webkit-scrollbar { display:none; }
+
+/* FULLSCREEN */
+.modal {
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,0.9);
+  display:none;
+  align-items:center;
+  justify-content:center;
+  z-index:99;
+}
+
+.modal img {
+  max-width:94%;
+  max-height:94%;
+  border-radius:16px;
+}
+
+footer {
+  margin-top:18px;
+  font-size:0.75rem;
+  opacity:0.7;
+}
+
+canvas {
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+}
 </style>
 </head>
+
 <body>
 
-<nav>
-  <a href="#home" class="active">Home</a>
-  <a href="#offers">Offers</a>
-  <a href="#to">To</a>
-  <a href="#from">From</a>
-  <a href="#ECARD">Ecard<aa/a>
-</nav>
-
-<section id="home">
+<div class="wrapper">
   <div class="card">
-    <h1>Birthday Surprise for Greater Kamikazi</h1>
 
-    <div>
-      <button class="btn" id="revealBtn">Try to reveal</button>
-      <button class="btn" id="copyBtn">Copy link</button>
+    <h1>🎆 Happy New Year 🎆</h1>
+    <div class="sub">
+      Waiting for a new year full of joy, amahoro and happiness ✨
     </div>
-    <div class="animatedWords">
-      <span>💛 Love</span>
-      <span>💫 Joy</span>
-      <span>🌸 Happiness</span>
-      <span>✨ Magic</span>
-      <span>💗 Smile</span>
-      <span>🌟 Dream</span>
+
+    <div class="countdown" id="count">Loading…</div>
+
+    <button class="btn" id="revealBtn">🎁 Open Surprise</button>
+    <button class="btn" id="copyBtn">🔗 Share this page</button>
+
+    <div class="surprise" id="surprise">
+      Happy New Year, Anith Mukeshimana! 🥂✨
     </div>
-    <div id="surpriseWord" class="surprise">Happy Birthday, Greater Kamikazi! 🎉</div>
-    <div id="personalMessage" class="message">From your lovely Gilbert 💖 I wish you endless joy, peace, and light ✨</div>
-    <footer>Open this on <strong>13/11</strong> to see the surprise!</footer>
-  </div>
-</section>
 
-<section id="offers" style="background: url('image/birthday.jpg') center/cover no-repeat; position: relative;">
-  <div class="card" id="lockedOffers" style="background: rgba(0,0,0,0.55); backdrop-filter: blur(10px);">
-    <h2>🎁 Special Birthday Offers</h2>
-    <p id="offerMsg">Offers unlock on November 13 — please be patient 💌</p>
+    <div class="message" id="message">
+      From the heart 💖  
+      I wish you joy, peace (amahoro), love and many smiles in this new year 🌟
+    </div>
 
-    <div id="offerList" style="display:none; margin-top:20px; gap:16px; display:flex; flex-wrap:wrap; justify-content:center;">
-      <div class="offerCard">
-        🍫 Sweet Chocolate Box<br>
-        <small>“Because you deserve something as sweet as your smile.”</small>
-      </div>
+    <!-- ECARD -->
+    <div class="ecard" id="ecard">
+      <h3>💖 Your Special E-Card 💖</h3>
+      <p>Swipe to see more photos, or tap one to view it clearly ✨</p>
 
-      <div class="offerCard">
-        🌹 Fresh Bouquet of Roses<br>
-        <small>“Each petal carries my love for you.”</small>
-      </div>
-
-      <div class="offerCard">
-        🎀 Personalized Gift Tag<br>
-        <small>“Just my way of saying — you’re truly special.”</small>
-      </div>
-
-      <div class="offerCard">
-        ✨ Magical Surprise Box<br>
-        <small>“Open it, and you’ll feel my heart inside.”</small>
-      </div>
-
-      <div class="offerCard">
-        💖 Heartfelt Letter<br>
-        <small>“Every word whispers how much I care.”</small>
-      </div>
-
-      <div class="offerCard">
-        🌟 Sparkling Keepsake<br>
-        <small>“To remind you how you light up my world.”</small>
+      <div class="gallery">
+        <img src="images/nsgth.jpg">
+        <img src="images/anith.jpg">
+        <img src="images/ani.jpg">
+        <img src="images/gibz.jpg">
       </div>
     </div>
 
-    <button id="openSurpriseBtn" class="btn" style="display:none; margin-top:16px;">Open Surprise</button>
+    <footer>
+      It opens automatically at midnight — Umwaka Mushya 🎇
+    </footer>
+
   </div>
-</section>
+</div>
 
+<div class="modal" id="modal">
+  <img id="modalImg">
+</div>
 
+<canvas id="confetti"></canvas>
 
-<section id="to">
-  <div class="card">
-    <h2>TO : </h2>
-    <p><strong>Greater Kamikazi</strong></p>
-    <p>The one who shines brighter than the stars and fills every day with warmth 💕</p>
-  </div>
-</section>
+<script>
+const now = new Date();
+let target = new Date(now.getFullYear()+1,0,1,0,0,0);
 
-<section id="from">
-  <div class="card">
-    <h2>FROM :</h2>
-    <p><strong>Gilbert Nsengimana</strong></p>
-    <p>Wishing you all the beauty, love, and laughter life can offer ✨</p>
-  </div>
-</section>
+const countEl = document.getElementById('count');
+const surprise = document.getElementById('surprise');
+const message = document.getElementById('message');
+const ecard = document.getElementById('ecard');
 
-<section id="ECARD">
-  <div class="card">
-    <h1>YOUR ECARD</h1>
-
-   👉🏻 <a href="greater.html"> Special Ecard </a>
-  </div>
-</section>
-
-<scrip>
-
-// Offers unlock logic
-function checkOfferUnlock() {
-  const now = new Date();
-  if(now.getMonth() === BIRTH_MONTH-1 && now.getDate() === BIRTH_DAY){
-    offerList.style.display = 'flex';
-    openOfferBtn.style.display = 'inline-block';
-    document.getElementById('offerMsg').style.display = 'none';
-  } else {
-    offerList.style.display = 'none';
-    openOfferBtn.style.display = 'none';
-    document.getElementById('offerMsg').style.display = 'block';
+function update(){
+  const diff = target - new Date();
+  if(diff <= 0){
+    countEl.textContent = "🎆 Happy New Year! 🎆";
+    reveal();
+    clearInterval(timer);
+    return;
   }
+  const d=Math.floor(diff/86400000);
+  const h=Math.floor(diff%86400000/3600000);
+  const m=Math.floor(diff%3600000/60000);
+  const s=Math.floor(diff%60000/1000);
+  countEl.textContent=`${d} days ${h}h ${m}m ${s}s`;
 }
 
-// Run once and then every minute
-checkOfferUnlock();
-setInterval(checkOfferUnlock, 60000);
+function reveal(){
+  surprise.classList.add('show');
+  message.classList.add('show');
+  ecard.style.display='block';
+  confetti();
+}
 
-openOfferBtn.addEventListener('click', () => {
-  revealSurprise();
-  window.scrollTo({top:0, behavior:'smooth'});
+document.getElementById('revealBtn').onclick = ()=>{
+  if(new Date() >= target) reveal();
+  else alert("Please wait until midnight 🎆");
+};
+
+document.getElementById('copyBtn').onclick = async()=>{
+  try{
+    await navigator.clipboard.writeText(location.href);
+    alert("Link copied 🎉");
+  }catch{
+    alert("Copy the link from the address bar");
+  }
+};
+
+// FULLSCREEN IMAGE
+const modal = document.getElementById('modal');
+const modalImg = document.getElementById('modalImg');
+
+document.querySelectorAll('.gallery img').forEach(img=>{
+  img.onclick = ()=>{
+    modalImg.src = img.src;
+    modal.style.display='flex';
+  };
 });
 
-// Countdown update
-updateCountdown();
-const timer=setInterval(updateCountdown,1000);
+modal.onclick = ()=> modal.style.display='none';
 
-// Navbar active link on scroll
-const navLinks = document.querySelectorAll('nav a');
-window.addEventListener('scroll', ()=>{
-  let current = '';
-  document.querySelectorAll('section').forEach(section=>{
-    const sectionTop = section.offsetTop-80;
-    if(pageYOffset >= sectionTop) current = section.getAttribute('id');
-  });
-  navLinks.forEach(link=> link.classList.remove('active'));
-  if(document.querySelector('nav a[href="#'+current+'"]')) document.querySelector('nav a[href="#'+current+'"]').classList.add('active');
-});
+// CONFETTI
+function confetti(){
+  const c=document.getElementById('confetti');
+  const x=c.getContext('2d');
+  c.width=innerWidth; c.height=innerHeight;
+  let p=[];
+  for(let i=0;i<120;i++)
+    p.push({x:Math.random()*c.width,y:Math.random()*-c.height,s:2+Math.random()*4,r:Math.random()*6});
+  let t=setInterval(()=>{
+    x.clearRect(0,0,c.width,c.height);
+    p.forEach(o=>{
+      o.y+=o.s;
+      x.fillStyle=`hsl(${Math.random()*360},100%,70%)`;
+      x.fillRect(o.x,o.y,o.r,o.r);
+    });
+  },16);
+  setTimeout(()=>clearInterval(t),6000);
+}
+
+update();
+const timer=setInterval(update,1000);
 </script>
 
 </body>
