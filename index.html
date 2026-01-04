@@ -1,155 +1,188 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Happy New Year 💖</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Happy New Year 💖</title>
 
-  <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-      font-family: 'Segoe UI', sans-serif;
-    }
+<style>
+* { box-sizing: border-box; margin:0; padding:0; font-family: 'Segoe UI', sans-serif; }
 
-    body {
-      background: linear-gradient(135deg, #ffdde1, #ee9ca7);
-      min-height: 100vh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      padding: 20px;
-      color: #333;
-    }
+body {
+  background: linear-gradient(135deg, #ffdde1, #ee9ca7);
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  color: #333;
+}
 
-    .container {
-      background: #ffffffcc;
-      backdrop-filter: blur(10px);
-      border-radius: 20px;
-      padding: 25px;
-      max-width: 900px;
-      width: 100%;
-      text-align: center;
-      box-shadow: 0 20px 40px rgba(0,0,0,0.15);
-    }
+.container {
+  background: #ffffffcc;
+  backdrop-filter: blur(10px);
+  border-radius: 20px;
+  padding: 25px;
+  max-width: 900px;
+  width: 100%;
+  text-align: center;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+}
 
-    h1 {
-      font-size: 2.2rem;
-      margin-bottom: 10px;
-    }
+h1 { font-size:2.2rem; margin-bottom:10px; }
+.caption { font-size:1.1rem; margin-bottom:20px; line-height:1.6; }
+.countdown { font-size:1.4rem; font-weight:bold; margin:15px 0 25px; }
 
-    .caption {
-      font-size: 1.1rem;
-      margin-bottom: 20px;
-      line-height: 1.6;
-    }
+/* Gallery */
+.gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 12px;
+}
 
-    .countdown {
-      font-size: 1.4rem;
-      font-weight: bold;
-      margin: 15px 0 25px;
-    }
+.photo-card {
+  position: relative;
+  cursor: pointer;
+}
 
-    .gallery {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-      gap: 12px;
-    }
+.photo-card img {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+  border-radius: 15px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
 
-    .gallery img {
-      width: 100%;
-      height: 180px;
-      object-fit: cover;
-      border-radius: 15px;
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-    }
+.photo-card:hover img {
+  transform: scale(1.05);
+  box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+}
 
-    .gallery img:hover {
-      transform: scale(1.05);
-      box-shadow: 0 10px 25px rgba(0,0,0,0.2);
-    }
+.photo-card .photo-caption {
+  position: absolute;
+  bottom: 6px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(0,0,0,0.5);
+  color: #fff;
+  font-size: 0.85rem;
+  padding: 3px 6px;
+  border-radius: 6px;
+}
 
-    footer {
-      margin-top: 25px;
-      font-size: 0.9rem;
-      opacity: 0.8;
-    }
+/* Fullscreen modal */
+.modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.9);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 99;
+}
 
-    /* 📱 Mobile adjustments */
-    @media (max-width: 480px) {
-      h1 {
-        font-size: 1.8rem;
-      }
+.modal img {
+  max-width: 94%;
+  max-height: 94%;
+  border-radius: 16px;
+}
 
-      .caption {
-        font-size: 1rem;
-      }
+footer { margin-top:25px; font-size:0.9rem; opacity:0.8; }
 
-      .gallery img {
-        height: 150px;
-      }
-    }
-  </style>
+/* Mobile adjustments */
+@media (max-width: 480px) {
+  h1 { font-size: 1.8rem; }
+  .caption { font-size: 1rem; }
+  .gallery img { height: 150px; }
+}
+</style>
 </head>
 
 <body>
 
-  <!-- 🎵 Background Music -->
-  <audio autoplay loop>
-    <source src="music/love.mp3" type="audio/mpeg">
-  </audio>
+<!-- Background Music -->
+<audio autoplay loop>
+  <source src="music/love.mp3" type="audio/mpeg">
+</audio>
 
-  <div class="container">
-    <h1>🎉 Happy New Year Anitha 💖</h1>
+<div class="container">
+  <h1>🎉 Happy New Year Anitha 💖</h1>
+  <p class="caption">
+    Happy New Year my dear ✨ <br>
+    I wish you joy, peace and smiles every day.<br>
+    <strong>Umwaka mushya mwiza 💕 ndagukunda cyane.</strong>
+  </p>
 
-    <p class="caption">
-      Happy New Year my dear ✨  
-      I wish you joy, peace and smiles every day.  
-      <br>
-      <strong>Umwaka mushya mwiza 💕 ndagukunda cyane.</strong>
-    </p>
+  <div class="countdown" id="countdown">Loading countdown…</div>
 
-    <div class="countdown" id="countdown">Loading countdown…</div>
-
-    <div class="gallery">
+  <!-- Gallery -->
+  <div class="gallery">
+    <div class="photo-card">
       <img src="image/nsgth.jpg" alt="">
-      <img src="image/anith.jpeg" alt="">
-      <img src="image/ani.jpeg" alt="">
-      <img src="image/gibz.jpeg" alt="">
-      <img src="image/anitha.jpg" alt="">
+      <div class="photo-caption">💖 Umunezero wawe ni ibyishimo byanjye</div>
     </div>
-
-    <footer>
-      Made with ❤️ just for you
-    </footer>
+    <div class="photo-card">
+      <img src="image/anith.jpeg" alt="">
+      <div class="photo-caption">✨ Urumuri rwanjye</div>
+    </div>
+    <div class="photo-card">
+      <img src="image/ani.jpeg" alt="">
+      <div class="photo-caption">🌸 Ibyishimo byinshi</div>
+    </div>
+    <div class="photo-card">
+      <img src="image/gibz.jpeg" alt="">
+      <div class="photo-caption">💕 Umutima wanjye</div>
+    </div>
+    <div class="photo-card">
+      <img src="image/anitha.jpg" alt="">
+      <div class="photo-caption">🎆 Umwaka mushya mwiza</div>
+    </div>
   </div>
 
-  <script>
-    const countdownEl = document.getElementById("countdown");
+  <footer>Made with ❤️ just for you</footer>
+</div>
 
-    // 🔥 SET TARGET DATE (example: Jan 1, 2026)
-    const targetDate = new Date("January 1, 2026 00:00:00").getTime();
+<!-- Fullscreen modal -->
+<div class="modal" id="modal">
+  <img id="modalImg">
+</div>
 
-    const timer = setInterval(() => {
-      const now = new Date().getTime();
-      const distance = targetDate - now;
+<script>
+const countdownEl = document.getElementById("countdown");
+const targetDate = new Date("January 1, 2026 00:00:00").getTime();
 
-      if (distance <= 0) {
-        clearInterval(timer);
-        countdownEl.innerHTML = "🎆 Happy New Year 🎆";
-        return;
-      }
+// Countdown timer
+const timer = setInterval(() => {
+  const now = new Date().getTime();
+  const distance = targetDate - now;
 
-      const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-      const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-      const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-      const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+  if(distance <=0){
+    clearInterval(timer);
+    countdownEl.innerHTML = "🎆 Happy New Year 🎆";
+    return;
+  }
 
-      countdownEl.innerHTML =
-        `${days}d ${hours}h ${minutes}m ${seconds}s`;
-    }, 1000);
-  </script>
+  const days = Math.floor(distance / (1000*60*60*24));
+  const hours = Math.floor((distance % (1000*60*60*24)) / (1000*60*60));
+  const minutes = Math.floor((distance % (1000*60*60)) / (1000*60));
+  const seconds = Math.floor((distance % (1000*60)) / 1000);
+
+  countdownEl.innerHTML = `${days}d ${hours}h ${minutes}m ${seconds}s`;
+}, 1000);
+
+// Fullscreen image modal
+const modal = document.getElementById('modal');
+const modalImg = document.getElementById('modalImg');
+
+document.querySelectorAll('.photo-card img').forEach(img=>{
+  img.onclick = ()=>{
+    modal.style.display = 'flex';
+    modalImg.src = img.src;
+  };
+});
+
+modal.onclick = () => modal.style.display = 'none';
+</script>
 
 </body>
 </html>
