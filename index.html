@@ -1,264 +1,155 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>🎆 Happy New Year 🎆</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Happy New Year 💖</title>
 
-<style>
-:root {
-  --bg1:#140f2d;
-  --bg2:#2b1055;
-  --accent:#ffcc70;
-  --text:#ffffff;
-  --green:#9effa1;
-}
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', sans-serif;
+    }
 
-* { box-sizing:border-box; }
+    body {
+      background: linear-gradient(135deg, #ffdde1, #ee9ca7);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+      color: #333;
+    }
 
-html,body {
-  margin:0;
-  min-height:100%;
-  font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial;
-  background: linear-gradient(160deg,var(--bg1),var(--bg2));
-  color:var(--text);
-}
+    .container {
+      background: #ffffffcc;
+      backdrop-filter: blur(10px);
+      border-radius: 20px;
+      padding: 25px;
+      max-width: 900px;
+      width: 100%;
+      text-align: center;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+    }
 
-.wrapper {
-  min-height:100vh;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  padding:16px;
-}
+    h1 {
+      font-size: 2.2rem;
+      margin-bottom: 10px;
+    }
 
-.card {
-  width:100%;
-  max-width:420px;
-  background:rgba(255,255,255,0.08);
-  border-radius:22px;
-  padding:26px 22px;
-  text-align:center;
-  backdrop-filter:blur(12px);
-  box-shadow:0 10px 40px rgba(0,0,0,.5);
-}
+    .caption {
+      font-size: 1.1rem;
+      margin-bottom: 20px;
+      line-height: 1.6;
+    }
 
-h1 {
-  font-size:1.8rem;
-  margin-bottom:8px;
-  color:var(--accent);
-}
+    .countdown {
+      font-size: 1.4rem;
+      font-weight: bold;
+      margin: 15px 0 25px;
+    }
 
-.sub {
-  font-size:0.95rem;
-  opacity:0.85;
-  margin-bottom:14px;
-}
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 12px;
+    }
 
-.countdown {
-  font-size:1.4rem;
-  font-weight:700;
-  margin-bottom:18px;
-  color:var(--accent);
-}
+    .gallery img {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+      border-radius: 15px;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
 
-.btn {
-  width:100%;
-  padding:12px;
-  margin:6px 0;
-  border-radius:12px;
-  border:none;
-  background:rgba(255,255,255,0.12);
-  color:white;
-  font-size:1rem;
-}
+    .gallery img:hover {
+      transform: scale(1.05);
+      box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+    }
 
-.btn:disabled { opacity:.6; }
+    footer {
+      margin-top: 25px;
+      font-size: 0.9rem;
+      opacity: 0.8;
+    }
 
-.surprise {
-  margin-top:20px;
-  font-size:1.7rem;
-  font-weight:700;
-  opacity:0;
-  transform:scale(.6);
-  transition:.7s;
-  color:var(--accent);
-}
+    /* 📱 Mobile adjustments */
+    @media (max-width: 480px) {
+      h1 {
+        font-size: 1.8rem;
+      }
 
-.surprise.show {
-  opacity:1;
-  transform:scale(1);
-}
+      .caption {
+        font-size: 1rem;
+      }
 
-.message {
-  margin-top:14px;
-  font-size:1.05rem;
-  color:var(--green);
-  opacity:0;
-  transition:1s;
-}
-
-.message.show {
-  opacity:1;
-  animation:glow 1.6s infinite alternate;
-}
-
-@keyframes glow {
-  from { text-shadow:0 0 6px var(--green); }
-  to { text-shadow:0 0 16px var(--green); }
-}
-
-/* ECARD */
-.ecard {
-  margin-top:22px;
-  padding:16px;
-  border-radius:18px;
-  background:rgba(255,255,255,0.1);
-  display:none;
-}
-
-.ecard h3 {
-  margin-bottom:6px;
-  color:#ffe9b3;
-}
-
-.gallery {
-  display:flex;
-  gap:12px;
-  overflow-x:auto;
-  scroll-snap-type:x mandatory;
-}
-
-.gallery img {
-  flex:0 0 85%;
-  border-radius:14px;
-  scroll-snap-align:center;
-  box-shadow:0 10px 30px rgba(0,0,0,.5);
-  cursor:pointer;
-}
-
-.modal {
-  position:fixed;
-  inset:0;
-  background:rgba(0,0,0,.9);
-  display:none;
-  align-items:center;
-  justify-content:center;
-  z-index:99;
-}
-
-.modal img {
-  max-width:95%;
-  max-height:95%;
-  border-radius:16px;
-}
-
-footer {
-  margin-top:18px;
-  font-size:.75rem;
-  opacity:.7;
-}
-</style>
+      .gallery img {
+        height: 150px;
+      }
+    }
+  </style>
 </head>
 
 <body>
 
-<div class="wrapper">
-<div class="card">
+  <!-- 🎵 Background Music -->
+  <audio autoplay loop>
+    <source src="music/love.mp3" type="audio/mpeg">
+  </audio>
 
-<h1>🎆 Happy New Year 🎆</h1>
-<div class="sub">Wishing you joy, amahoro and happiness ✨</div>
+  <div class="container">
+    <h1>🎉 Happy New Year Anitha 💖</h1>
 
-<div class="countdown" id="count"></div>
+    <p class="caption">
+      Happy New Year my dear ✨  
+      I wish you joy, peace and smiles every day.  
+      <br>
+      <strong>Umwaka mushya mwiza 💕 ndagukunda cyane.</strong>
+    </p>
 
-<button class="btn" id="revealBtn">🎁 Open Surprise</button>
+    <div class="countdown" id="countdown">Loading countdown…</div>
 
-<div class="surprise" id="surprise">
-Happy New Year, Anith Mukeshimana 🥂✨
-</div>
+    <div class="gallery">
+      <img src="image/nsgth.jpg" alt="">
+      <img src="image/anith.jpeg" alt="">
+      <img src="image/ani.jpeg" alt="">
+      <img src="image/gibz.jpeg" alt="">
+      <img src="image/anitha.jpg" alt="">
+    </div>
 
-<div class="message" id="message">
-From my heart 💖  
-May this year bring love, peace (amahoro) and many smiles 🌟
-</div>
-
-<!-- ✅ IMAGES KEPT EXACTLY AS YOU ADDED -->
-<div class="ecard" id="ecard">
-  <h3>💖 Your Special E-Card 💖</h3>
-  <div class="gallery">
-    <img src="image/nsgth.jpg">
-    <img src="image/anith.jpeg">
-    <img src="image/ani.jpeg">
-    <img src="image/gibz.jpeg">
+    <footer>
+      Made with ❤️ just for you
+    </footer>
   </div>
-</div>
 
+  <script>
+    const countdownEl = document.getElementById("countdown");
 
-<footer>Umwaka Mushya Mwiza 🎇</footer>
+    // 🔥 SET TARGET DATE (example: Jan 1, 2026)
+    const targetDate = new Date("January 1, 2026 00:00:00").getTime();
 
-</div>
-</div>
+    const timer = setInterval(() => {
+      const now = new Date().getTime();
+      const distance = targetDate - now;
 
-<div class="modal" id="modal"><img id="modalImg"></div>
+      if (distance <= 0) {
+        clearInterval(timer);
+        countdownEl.innerHTML = "🎆 Happy New Year 🎆";
+        return;
+      }
 
-<script>
-/* 🔒 FIXED TARGET DATE */
-const TARGET_DATE = new Date("2025-01-01T00:00:00");
+      const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-const count = document.getElementById("count");
-const revealBtn = document.getElementById("revealBtn");
-const surprise = document.getElementById("surprise");
-const message = document.getElementById("message");
-const ecard = document.getElementById("ecard");
-
-let revealed = false;
-
-function reveal() {
-  if (revealed) return;
-  revealed = true;
-
-  count.textContent = "🎆 Happy New Year 🎆";
-  surprise.classList.add("show");
-  message.classList.add("show");
-  ecard.style.display = "block";
-  revealBtn.disabled = true;
-  revealBtn.textContent = "🎉 Opened";
-}
-
-function tick() {
-  const diff = TARGET_DATE - new Date();
-
-  if (diff <= 0) {
-    reveal();
-    clearInterval(timer);
-    return;
-  }
-
-  const d = Math.floor(diff / 86400000);
-  const h = Math.floor(diff / 3600000) % 24;
-  const m = Math.floor(diff / 60000) % 60;
-  const s = Math.floor(diff / 1000) % 60;
-
-  count.textContent = `${d}d ${h}h ${m}m ${s}s`;
-}
-
-revealBtn.onclick = reveal;
-
-/* FULLSCREEN IMAGE VIEW */
-const modal = document.getElementById("modal");
-const modalImg = document.getElementById("modalImg");
-
-document.querySelectorAll(".gallery img").forEach(img=>{
-  img.onclick=()=>{
-    modalImg.src = img.src;
-    modal.style.display="flex";
-  };
-});
-modal.onclick=()=>modal.style.display="none";
-
-tick();
-const timer = setInterval(tick,1000);
-</script>
+      countdownEl.innerHTML =
+        `${days}d ${hours}h ${minutes}m ${seconds}s`;
+    }, 1000);
+  </script>
 
 </body>
 </html>
